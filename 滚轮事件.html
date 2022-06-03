@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        一、滚轮事件
+        onmousewheel
+        鼠标滚轮滚动事件，会在滚轮滚动的时候触发
+        但是火狐不支持
+        在火狐中需要使用DOMMouseScroll来绑定事件
+          注意该事件需要通过addEventListener()函数来绑定
+
+          判断鼠标滚轮滚动的方向
+          event.wheelDelta 可以获取鼠标滚轮滚动的方向
+          wheelDelta这个值我们不看大小，只看正负（向上滚：正值，向下滚：负值）
+          这个属性火狐中不支持，用event.detail代替
+          但是它是正值向下滚，负值向上滚
+
+          当滚轮滚动时，如果浏览器有滚动条，滚动条会随之滚动
+          这是浏览器默认行为，如果不希望发生，则可以取消
+          使用addEventListener()方法来绑定响应函数，取消默认行为不能使用return false
+          需要使用event来取消行为
+          event.preventDefault();
+          IE8不支持event.preventDefault();如果直接调用会报错
+          event.preventDefault()&&event.preventDefault();
+
+         二、键盘事件
+         onkeydown
+           按键被按下
+           对于onkeydown来说，如果一直按着被某个按键不送手，事件就会一直触发
+           当onkeydown连续触发时，第一次额第二次之间会隔稍微长的一段时间，其他的会非常快
+             这个是为了防止误操作发生
+         onkeyup
+           按键被松开
+        键盘事件一般都会绑定给一些可以获取到焦点的对象或者是document
+         keyCode
+           可以获取按键编码，通过它可以知道哪个按键被按下
+         altKey
+         ctrlKey
+         shiftKey
+        这三个用来判断alt，ctrl和shift是否被按下
+            如果按下则返回true，否则返回false
+     
+        在文本框中输入内容属于onkeydown的默认行为
+        如果在onkeydown中取消了默认行为，则输入的内容不会出现在文本框中
+        可以借助这个功能来限制用户只能输入数字、字母或者其他东西
+         
+         三、键盘移动div
+         按左键，div向左移动
+         按右键，div向右移动
+         37左
+         38上
+         39右
+         40下
+         用switch语句
+         
+         
+         */ 
+
+
+
+
+
+
+        
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

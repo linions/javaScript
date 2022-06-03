@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 打印1~100之间所有奇数之和
+        var i, sum = 0;
+        for (i = 1; i <= 100; i++) {
+            if (i % 2 == 1)
+                sum += i;
+        }
+        document.write(sum + "<br/>");
+
+        // 打印1~100之间所有7的倍数的个数以及总和
+        var i = 1, sum = 0;
+        for (i; i <= 100; i++) {
+            if (i % 7 == 0)
+                sum += i;
+        }
+        document.write(sum + "<br />");
+        // 打印水仙花数
+        var i, m, n, l;
+        for (i = 100; i < 1000; i++) {
+            m = i % 10;
+
+            n = (i / 10) % 10;
+            n = parseInt(n);
+            l = i / 100;
+            l = parseInt(l);
+            if (m * m * m + n * n * n + l * l * l == i)
+                document.write(i + "<br />");
+        }
+        // 判断用户输入的数是否为素数
+        var num = prompt("请输入一个整数：");
+        var b = 1;
+        while (b) {
+            if (num < 1)
+                num = prompt("输入有误，请重新输入：");
+            else {
+                if (num == 1 || num == 2) {
+                    alert(num + "是质数");
+                    break;
+                }
+                else for (var i = 2; i < num; i++) {
+                    if (num % i == 0) {
+                        alert(num + "不是质数");
+                        break;
+                    }
+                    if (i == num - 1)
+                        alert(num + "是质数");
+                }
+                b = 0;
+            }
+
+        }
+        // 输出梅花图形
+        for (var i = 1; i < 6; i++) {
+            for (var j = 1; j <= i; j++)
+                document.write("*");
+            document.write("<br />");
+        }
+        document.write("<br />");
+        for (var i = 5; i > 0; i--) {
+            for (var j = 1; j <= i; j++)
+                document.write("*");
+            document.write("<br />");
+        }
+        // 打印99乘法表
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= i; j++) {
+                sum = i * j;
+                document.write("<span>" + j + "*" + i + "=" + sum + "</span>");
+
+            }
+            document.write("<br />");
+        }
+    </script>
+    <style>
+        body {
+            width: 2000px;
+        }
+
+        span {
+            display: inline-block;
+            width: 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>

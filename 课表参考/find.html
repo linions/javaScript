@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询课表</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<link rel="stylesheet" href="./find.css">
+</head>
+<body>
+<div id="app">
+  
+<div id="box">
+  <div id="left"></div>
+  <div id="navigation">
+    <select name="year" id="selection" v-model="selected">
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+    </select>
+    <label for="department">
+      <input type="text" id="department" placeholder="专业名称(完整且正确)"  v-model="department">
+    </label>
+    <label for="class">
+      <input type="text" id="classNumber" placeholder="班级(几班就几号)" v-model="classNumber">
+    </label>
+    <button id="research" @click="analyze()">查询</button>
+  </div>
+  <div id="right"></div>
+</div>
+  <table>
+  <caption>
+    <button @click="decrease"><</button>
+    第{{weekOrder}}周
+    <button @click="increase">></button>
+  </caption>
+  <tr id="week">
+    <!-- 增加课程 -->
+    <th id="add" @click="addclass()">+</th>
+    <th v-for="items in weeksChinese">{{items}}</th>
+  </tr>
+  <!-- 下面的标签写的比较复杂，没能实现复用，
+    主要是没有解决v-for的嵌套使用，以及{{}}里面放变量的问题
+   -->
+  <tr id="fristTime" >
+    <td class="time">
+      1~2
+      <br>
+      08:00
+      <br>
+      09:40
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,1)" @dblclick="modifty(Monday,index1,1)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,1)" @dblclick="modifty(Tuesday,index1,1)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,1)" @dblclick="modifty(Wednesday,index1,1)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,1)" @dblclick="modifty(Thursday,index1,1)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,1)" @dblclick="modifty(Friday,index1,1)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,1)" @dblclick="modifty(Saturday,index1,1)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,1)" @dblclick="modifty(Sunday,index1,1)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+  <tr id="secondTime">
+    <td class="time">
+      3~4
+      <br>
+      09:55
+      <br>
+      11:35
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,2)" @dblclick="modifty(Monday,index1,2)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,2)" @dblclick="modifty(Tuesday,index1,2)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,2)" @dblclick="modifty(Wednesday,index1,2)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,2)" @dblclick="modifty(Thursday,index1,2)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,2)" @dblclick="modifty(Friday,index1,2)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,2)" @dblclick="modifty(Saturday,index1,2)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,2)" @dblclick="modifty(Sunday,index1,2)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+  <tr id="thirdTime">
+    <td class="time">
+      5~6
+      <br>
+      14:00
+      <br>
+      15:40
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,3)" @dblclick="modifty(Monday,index1,3)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,3)" @dblclick="modifty(Tuesday,index1,3)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,3)" @dblclick="modifty(Wednesday,index1,3)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,3)" @dblclick="modifty(Thursday,index1,3)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,3)" @dblclick="modifty(Friday,index1,3)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,3)" @dblclick="modifty(Saturday,index1,3)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,3)" @dblclick="modifty(Sunday,index1,3)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+  <tr id="fourthTime">
+    <td class="time">
+      7~8
+      <br>
+      15:55
+      <br>
+      17:35
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,4)" @dblclick="modifty(Monday,index1,4)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,4)" @dblclick="modifty(Tuesdayindex1,4)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,4)" @dblclick="modifty(Wednesday,index1,4)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,4)" @dblclick="modifty(Thursday,index1,4)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,4)" @dblclick="modifty(Friday,index1,4)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,4)" @dblclick="modifty(Saturday,index1,4)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,4)" @dblclick="modifty(Sunday,index1,4)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+  <tr id="fifthTime">
+    <td class="time">
+      9~10
+      <br>
+      19:00
+      <br>
+      20:40
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,5)" @dblclick="modifty(Monday,index1,5)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,5)" @dblclick="modifty(Tuesday,index1,5)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,5)" @dblclick="modifty(Wednesday,index1,5)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,5)" @dblclick="modifty(Thursday,index1,5)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,5)" @dblclick="modifty(Friday,index1,5)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,5)" @dblclick="modifty(Saturday,index1,5)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,5)" @dblclick="modifty(Sunday,index1,5)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+  <tr id="sixthTime">
+    <td class="time">
+      11~12
+      <br>
+      20:55
+      <br>
+      22:25
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Monday,index1,6)" @dblclick="modifty(Monday,index1,6)">{{Monday[index1].course_name}}@{{Monday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Tuesday,index1,6)" @dblclick="modifty(Tuesday,index1,6)">{{Tuesday[index1].course_name}}@{{Tuesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Wednesday,index1,6)" @dblclick="modifty(Wednesday,index1,6)">{{Wednesday[index1].course_name}}@{{Wednesday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Thursday,index1,6)" @dblclick="modifty(Thursday,index1,6)">{{Thursday[index1].course_name}}@{{Thursday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Friday,index1,6)" @dblclick="modifty(Friday,index1,6)">{{Friday[index1].course_name}}@{{Friday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Saturday,index1,6)" @dblclick="modifty(Saturday,index1,6)">{{Saturday[index1].course_name}}@{{Saturday[index1].class_room}}</p>
+    </td>
+    <td >
+      <p v-for="(item,index1) in classOder" v-show="isshow(Sunday,index1,6)" @dblclick="modifty(Sunday,index1,6)">{{Sunday[index1].course_name}}@{{Sunday[index1].class_room}}</p>
+    </td>
+  </tr>
+
+  </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./find.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+         *object对象
+         *基本数据类型都是单一的值，之和值之间没有任何联系
+         *在JS中来表示一个人的信息（name gender age）
+         *var name ="孙悟空"；
+         *var gender = "男";
+         *var age = 18;
+         *如果使用基本数据类型的数据，我们所创建的变量都是独立的，不能成为一个整体
+         *
+         *对象属于一种复合的数据类型，在对象中可以保存多个不同数据类型的属性
+         *对象的分类：
+         *1、内建对象
+         *   由ES标准中定义的对象，在任何ES的实现中都可以使用
+             比如 Math String Number Boolean Function Object 
+         *2、宿主对象
+         *    由建设运行环境提供的对象，目前来讲主要指由浏览器提供的对象
+         *比如 BOM DOM
+         *3、自义定对象
+         *   由开发人员自己创建的对象
+         */
+        //创建对象
+        /*
+        *使用new关键字调用函数，是构造函数constructor
+        *构造函数是专门用来创建对象的函数
+        */
+        var obj = new Object();
+        //在对象中添加属性
+        /*
+        在对象在保存的值为属性
+        向对象添加属性
+        语法：  对象.属性名 = 属性名；
+        */
+        obj.name = "孙悟空";
+        obj.gender = "男";
+        obj.age = 18;
+        // 如果读取对象中没有的属性，不会报错而是会返回undefined
+        console.log(obj.name);
+        //修改对象属性值
+        // 语法 对象.属性名=新值；
+
+
+        // 属性名和属性值
+        obj.name = "孙悟空";
+        /*name 为属性，孙悟空 为属性值
+        属性名：
+        对象属性名不强制要求遵守标识符的规范
+        尽量使用标识符的规范
+        */
+
+        /*如果要使用特殊的属性名，不能采用.的范式来操作
+        需要使用另一种方式
+            语法  对象["属性名"] = 属性值；
+            读取时也需要采用这种方式
+        */
+        obj["123"] = 213;
+        console.log(obj["123"]);
+        /*使用[]这种形式去操作属性，更加的灵活
+        在[]中可以直接传递一个变量，这样变量的值是多少就会去读取那个属性
+        */
+        obj["nihao"] = "你好";
+        var n = "nihao";
+        console.log(obj[n]);
+        /*
+        JS对象的属性值可以使任意的数据类型
+        甚至也可以是一个对象
+        */
+        var obj2 = new Object();
+        obj2.name = "猪八戒";
+        obj.tset = obj2;
+        console.log(obj.tset.name);
+        /*
+        in 运算符
+        通过该运算可以检查一个对象中是否含有指定的属性
+          如果有则返回true，没有这返回false
+          语法
+          "属性名" in 对象
+          console.log(tset in obj2);
+        */
+        /*
+        创建一个对象
+        var obj = new Object();
+        obj.name="孙悟空"；
+        obj.age=18;
+        属性值可以是人和属性的数据类型，也可以是个函数
+        obj.sayName=function(){
+          console.log(obj.name);
+        };
+        console.log(obj.sayName);
+        obj.sayName();
+        函数也可以成为对象的属性，如果一个函数作为一个对象的属性保存
+        那么我们称这个函数时这个对象的方法
+        调用这个函数就说调用对象的方法
+        但它只是名称上的区别
+
+        枚举对象中的属性
+        */
+        var obj = {
+            name: "孙悟空",
+            age: 18,
+            gender :"男",
+            address: "花果山",
+        };
+        /*
+        枚举对象中的属性
+        使用for...in语句
+        语法
+         for(var 变量 in 对象){
+
+         }
+         for...in语句中有几个属性就会循环几次
+         每次执行，会将对象中的一个属性的名字赋值给变量
+         */
+        for (var n in obj) {
+            console.log(n);
+            console.log(obj[n]);
+        }
+        /*
+        使用工厂方法创建对象
+        通过该方法可以大批量创建对象
+
+        */
+        function createPerson(name, age, gender) {
+            var obj = new Object;
+            obj.name = name;
+            obj.age = age;
+            obj.gender = gender;
+            obj.sayName = function () {
+                alert(this.name);
+            };
+            return obj;
+        }
+
+        var obj2 = createPerson("猪八戒", 28, "男");
+        var obj2 = createPerson("孙悟空", 18, "男");
+        console.log(obj2);
+        
+        /*
+        使用工厂方法创建的对象，使用的构造函数都是Object
+        所以创建的对象都是Object这个类型
+        无法区分出多种不同类型的对象
+        */
+        /*
+         将函数定义在全局作用域中污染了全局作用域的命名空间
+           而且定义在全局作用域中也很不安全
+        */
+        /*
+        Date对象
+          在JS中表示一个时间的对象
+        创建一个Date对象
+          如果直接使用构造函数创建一个Date对象，则会封装为当前代码执行的时间
+           var b=new Date();
+           console.log(d);
+        创建一个指定的时间对象
+          需要在构造函数中传递一个表示时间的字符串作为参数
+          日期格式： 月份/日/年 时：分：秒
+          var d2=new Date("12/23/20 21:09");
+          console.log(d2);
+        方法：
+        一、getDate()
+          获取当前日期对象是几日
+        二、getDay()
+           获取当前日期对象是周几
+             会返回一个0-6的值
+              0：周日
+        三、getMonth()
+           获取当前日期对象的月份
+             会返回一个0-11的值
+             0：一月
+        四、getFullYear()
+           获取当前日期对象的年份
+        五、getTime()
+           获取当前对象的时间戳
+             时间戳指的是从格林威治标准时间的1970年1月1日，0是0分0秒
+               到当前日期所花费的毫秒数
+            获取当前的时间戳
+             var start=Date.now();
+              ...
+             var end=Date.now();
+            console.log(end-start);
+        */
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

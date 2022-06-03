@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询课表</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <style></style>
+</head>
+
+<body >
+    <section id="app" >
+        <h2>课程表</h2>
+    <div class="search" >
+        <span class="found" >年级：</span>
+        <input type="text" class="find" v-model="Grade" placeholder="入学年份"></input>
+        <span class="found">专业全称：</span>
+        <input type="text" class="find" v-model="Major"></input>
+        <span class="found">班级：</span>
+        <input type="text" class="find" v-model="Class" placeholder="是几班填几号"></input>
+        <button class="button" id="button" v-on:click="getClassTable" >查询</button>
+    </div>
+    <div class="box">
+        <span class="week">
+            
+            <input type="button" class="previousweek" v-text="week" v-on:click="reduce"  value="<">
+                    第{{week}}周
+            <input type="button" class="nextweek"  v-on:click="add"  value=">">
+                      
+        </span>
+        <table class="lesson">
+            <tr class="day">
+                <td class="edit" v-on:click="edit">+</td>
+                <td><span class="first" >星期一</span><span><input type="button" class="month" v-model="dateinfo[0]"></span> </td>
+                <td><span class="first" >星期二</span><span><input type="button" class="month" v-model="dateinfo[1]"></span> </td>
+                <td><span class="first" >星期三</span><span><input type="button" class="month" v-model="dateinfo[2]"></span> </td>
+                <td><span class="first" >星期四</span><span><input type="button" class="month" v-model="dateinfo[3]"></span> </td>
+                <td><span class="first" >星期五</span><span><input type="button" class="month" v-model="dateinfo[4]"></span> </td>
+                <td><span class="first" >星期六</span><span><input type="button" class="month" v-model="dateinfo[5]"></span> </td>
+                <td><span class="first" >星期日</span><span><input type="button" class="month" v-model="dateinfo[6]"></span> </td>
+            </tr>
+          <tr value="1">
+                <td class="firstLine"><span>第一节</span>8:00~9:40</td>
+                <td v-for="item in list.slice(0,7)" v-on:click="addLesson">{{item}}</td>
+            </tr>
+            <tr value="2">
+             <td class="firstLine"><span>第二节</span>9:55~11;35</td>
+            <td v-for="(item,index) in list.slice(7,14)" v-on:click="addLesson">{{item}}</td>  
+            </tr>
+            <tr value="3">
+                <td class="firstLine"><span>第三节</span>14:00~15:40</td>
+                <td v-for="(item,index) in list.slice(14,21)" v-on:click="addLesson">{{item}}</td>
+            </tr>
+            <tr value="4">
+                <td class="firstLine"><span>第四节</span>15:55~17:35</td>
+            <td v-for="(item,index) in list.slice(21,28)" v-on:click="addLesson">{{item}}</td>
+            </tr>
+            <tr value="5">
+                <td class="firstLine"><span>第五节</span>19:00~20:40</td>
+                <td v-for="(item,index) in list.slice(28,35)" v-on:click="addLesson">{{item}}</td>
+            </tr>
+            <tr value="6">
+              <td class="firstLine"><span>第六节</span>20:55~22:35</td>
+              <td v-for="(item,index) in list.slice(35,42)" v-on:click="addLesson">{{item}}</td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<script>
+  window.onload = function () {
+    var app = new Vue({
+        el: '#app',
+        data: {
+          Grade:"2019",
+          Major:"计算机科学与技术",
+          Class:"4",
+          week: "1",
+          dateinfo:[],
+          month:"",
+          day:[],
+          message:"",
+          section:"",
+          date:[],
+          list:[],
+          year:"",
+        },
+        methods:{
+          addLesson:function(){
+            alert("请添加内容");
+          },
+          edit:function(){
+               alert("您需要添加信息吗？");
+          },
+          add: function () {
+            this.week++ ;
+            if(this.dateinfo[0].slice(0,2)!=this.dateinfo[6].slice(0,2))
+               {
+                 this.month=this.dateinfo[6].slice(0,2);
+                 this.month=this.month.replace("-","");
+               }
+            for (let i = 0; i < 7; i++) {
+              if(i==0)
+               this.day[i]=this.day[6]+1;
+               else this.day[i]=this.day[i-1]+1;
+              if (this.month == 1 || this.month == 3 || this.month == 5 || this.month == 7 || this.month == 8 || this.month == 10 || this.month == 12) {
+                   if (this.day[i] > 31) {
+                     if(this.month==12){
+                     this.month=1;
+                     this.year++;
+                     }
+                     else this.month++;
+                     for (let j = i; j < 7; j++)
+                       this.day[j] = this.day[j] % 31;
+                 }
+                 this.dateinfo[i]= this.month+"-"+  this.day[i];
+              }
+              if (this.month == 2) {
+                   if (this.year % 400 == 0 || (this.year % 4 == 0 && this.year% 100 != 0)) {
+                     if (this.day[i] > 29) {
+                       this.month++;
+                       for (let j = i; j < 7; j++)
+                         this.day[j] = this.day[j] % 29;
+                     }
+                   }
+                   else {
+                     if (this.day[i] > 28) {
+                        this.month++;
+                       for (let j = i; j < 7; j++)
+                         this.day[j] = this.day[j] % 28;
+                     }
+                   }
+                   this.dateinfo[i] = this.month + "-" +  this.day[i];
+                 }
+                 if (this.month == 4 || this.month == 6 || this.month == 9 || this.month == 11) {
+                   if (this.day[i] > 30) {
+                     this.month++;
+                     for(let j=i;j<7;j++)
+                       this.day[j]=this.day[j]%30;
+                   }
+                   this.dateinfo[i] = this.month + "-" + this.day[i];
+                  }
+            } 
+            if (this.week > 24){
+              this.week = 1;
+              this.dateinfo[0] = "9-14";
+              this.dateinfo[1] = "9-15";
+              this.dateinfo[2] = "9-16";
+              this.dateinfo[3] = "9-17";
+              this.dateinfo[4] = "9-18";
+              this.dateinfo[5] = "9-19";
+              this.dateinfo[6] = "9-20";
+              this.month=9;
+              this.day[0]=14;
+              this.day[6]=20;
+            }
+          },
+          reduce: function () {
+            this.week--;
+            if (this.dateinfo[0].slice(0, 2) != this.dateinfo[6].slice(0, 2)) {
+              this.month = this.dateinfo[0].slice(0, 2);
+              this.month = this.month.replace("-", "");
+            }
+            for (let i = 6; i >= 0; i--) {
+              if (i ==6)
+                this.day[i] = this.day[0] -1;
+              else this.day[i] = this.day[i+1] - 1;
+              if (this.month == 1 || this.month == 3 || this.month == 5 || this.month == 7 || this.month == 8 || this.month == 10 || this.month == 12) {
+                if (this.day[i] < 1) {
+                  if (this.month == 1) {
+                    this.month = 12;
+                    for (let j = i; j >= 0; j--)
+                      this.day[j] = this.day[j] + 31;
+                    this.year--;
+                  }
+                  else if(this.month==3 && this.year % 400 == 0 || (this.year % 4 == 0 && this.year % 100 != 0)){
+                          this.month--;
+                          for (let j = i; j >= 0; j--)
+                      this.day[j] = this.day[j] + 29;
+                  }
+                  else if(this.month==3){
+                    this.month--;
+                    for (let j = i; j >= 0; j--)
+                      this.day[j] = this.day[j] + 28;
+                  }
+                  else{
+                    this.month--;
+                    for (let j = i; j >= 0; j--)
+                      this.day[j] = this.day[j] + 30;
+                }
+              }
+                this.dateinfo[i] = this.month + "-" + this.day[i];
+            }
+              if (this.month == 2) {
+                  if (this.day[i] < 1) {
+                    this.month--;
+                    for(let j=i;j>=0;j--)
+                    this.day[j] = this.day[j] + 31;
+                  }
+                  this.dateinfo[i] = this.month + "-" + this.day[i];
+                }
+              if (this.month == 4 || this.month == 6 || this.month == 9 || this.month == 11) {
+                if (this.day[i] < 1) {
+                  this.month--;
+                  for (let j = i; j >= 0; j--)
+                    this.day[j] = this.day[j] + 31;
+                }
+                this.dateinfo[i] = this.month + "-" + this.day[i];
+              }
+          }
+            if (this.week < 1){
+              this.week = 24;
+              this.dateinfo[0] = "2-22";
+              this.dateinfo[1] = "2-23";
+              this.dateinfo[2] = "2-24";
+              this.dateinfo[3] = "2-25";
+              this.dateinfo[4] = "2-26";
+              this.dateinfo[5] = "2-27";
+              this.dateinfo[6] = "2-28";
+              this.month=2;
+              this.day[0]=22;
+              this.day[6]=28;
+            }
+          },
+          getClassTable:function(){
+             axios.get('./全校课表数据/json/' + this.Grade + this.Major + this.Class + '班.json')
+            .then(response=> {
+              this.year = response.data.dateinfo.slice(0, 4);
+              this.month = response.data.dateinfo.slice(5, 7);
+              this.month = this.month.replace("0", "")
+              this.day[0] = response.data.dateinfo.slice(-2,);
+              this.day[0] = this.day[0].replace("0", "");
+              for (let i = 1; i < 7; i++) 
+              this.day[i] = parseInt(this.day[i - 1]) + 1; 
+              for (let i = 0; i < 7; i++)
+                this.dateinfo.push(this.month + "-" + this.day[i]);
+              this.date[0] = response.data.Monday;
+              this.date[1] = response.data.Tuesday;
+              this.date[2] = response.data.Wednesday;
+              this.date[3] = response.data.Thursday;
+              this.date[4] = response.data.Friday;
+              this.date[5] = response.data.Saturday;
+              this.date[6] = response.data.Sunday;
+              for (let k = 0; k < 42; k++) {
+                this.list[k] = "";
+              }
+              for(let i=0;i<7;i++)
+               for(let j=0;j<this.date[i].length;j++){
+                 if(this.date[i][j]!=null&&this.date[i][j].week_array.includes(this.week.toString())){
+                   this.message = this.date[i][j].course_name + "@" + this.date[i][j].class_room;
+                   this.section=this.date[i][j].section;
+                   this.list.splice((this.section-1)*7+i,1,this.message);
+                 }
+               }
+            })
+            .catch(function (error) {
+              alert("请输入正确的班级信息");
+              console.log(error);
+            });
+        },
+          getClass:function(){
+          axios.get('./全校课表数据/json/' + this.Grade + this.Major + this.Class + '班.json')
+            .then(response => {
+              this.date[0] = response.data.Monday;
+              this.date[1] = response.data.Tuesday;
+              this.date[2] = response.data.Wednesday;
+              this.date[3] = response.data.Thursday;
+              this.date[4] = response.data.Friday;
+              this.date[5] = response.data.Saturday;
+              this.date[6] = response.data.Sunday;
+              for (let k = 0; k < 42; k++) {
+                this.list[k] = "";
+              }
+              for (let i = 0; i < 7; i++)
+                for (let j = 0; j < this.date[i].length; j++) {
+                  if (this.date[i][j] != null && this.date[i][j].week_array.includes(this.week.toString())) {
+                    this.message = this.date[i][j].course_name + "@" + this.date[i][j].class_room;
+                    this.section = this.date[i][j].section;
+                    this.list.splice((this.section - 1) * 7 + i, 1, this.message);
+                  }
+                }
+              console.log(this.list);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        },
+      },
+      watch: {
+        week: {
+          handler(newVal, oldVal) {
+            console.log('oldVal:', oldVal);
+            console.log('newVal:', newVal);
+             for (let k = 0; k < 42; k++) {
+              this.list[k] = "";
+            }
+            this.getClass();
+          },
+        }
+      },
+    });
+  } 
+</script>
+</body>
+</html>

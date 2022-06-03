@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    # WEB基础统一检测
+
+    ## 一、概念
+
+    #### 1. CSS的全称
+
+    <div style="color:white;">
+        Cascading Style Sheet
+    </div>
+    #### 2. 常见的块标签，行标签，行内块标签
+
+    <div style="color:white">
+        常见的块级标签：div,p,h1-h6,ul,li,dl,dt,dd
+        常见的行级标签：a,span,strong,u,em
+        常见的行内块标签：img,input,textarea
+    </div>
+
+    #### 3. css 样式优先级
+
+    <div style="color:white">
+        内联样式 > ID 选择器 > 类选择器 = 属性选择器 = 伪类选择器 > 标签选择器 = 伪元素选择器
+    </div>
+    #### 4. js字母转换成小写的方法是
+
+    <div style="color:white"> toLowerCase() </div>
+
+    #### 5. 删除数组元素最后一项的方法为
+
+    <div style="color:white"> pop() </div>
+
+
+
+
+    ## 二、理解
+
+    #### 1. 相对路径./与../区别
+
+    <div style="color:white;">
+        “./”：代表目前所在的目录。
+        “../”：代表上一层目录。
+    </div>
+
+    #### 2. margin与padding的区别
+
+    <div style="color:white">
+        margin：（外边距）是指从自身边框到另一个容器边框之间的距离，就是容器外距离。
+        padding：（内边距）是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离
+    </div>
+    #### 3. slice和splice的区别
+
+    <div style="color:white">
+        slice是指定在一个数组中的元素创建一个新的数组，即原数组不会变
+        splice是JS中数组功能最强大的方法，它能够实现对数组元素的删除、插入、替换操作，返回值为被操作的值
+    </div>
+    #### 4.说一下你理解的箭头函数
+
+    <div style="color:white">
+        箭头函数是ES6新增的一种函数，比函数表达式的语法更简洁，没有 this、没有 arguments，不能使用 new 进行调用
+    </div>
+
+    #### 5. js中事件绑定的3种方法
+
+    <div style="color:white">
+        1.HTML 特性（attribute）：onclick="..."。
+        2.DOM 属性（property）：elem.onclick = function。
+        3.方法（method）：elem.addEventListener(event, handler[, phase]) 用于添加，removeEventListener 用于移除。
+    </div>
+
+    ## 三、运用
+
+    #### 1. 下面这段js代码输出结果为：
+
+    ```
+    let a = 0, b, c;
+    b = a++;
+    c = ++a;
+    console.log(a,b,c);
+    ```
+    <div style="color:white;"> 2 0 2 </div>
+
+    #### 2.以下代码输出什么？
+
+    ```
+    var test = (function (a) {
+    this.a = a;
+    return function (b) {
+    return this.a + b;
+    }
+    })((function (a, b) {
+    return a;
+    })(1, 2));
+    console.log(test(4));
+    ```
+    <div style="color:white;"> 5 </div>
+    #### 3. 创建一个函数 `clear(elem)` 用来移除元素里的内容。
+
+    ```markup
+    <ol id="elem">
+        <li>Hello</li>
+        <li>World</li>
+    </ol>
+
+    <script>
+        function clear(elem) { /* 你的代码 */ }
+        clear(elem); // 清除列表
+    </script>
+
+    ```
+
+    <div style="color:white;">
+        function clear(elem) {
+        elem.innerHTML = '';
+        }
+    </div>
+
+</body>
+
+</html>

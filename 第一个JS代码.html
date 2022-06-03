@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- JS代码写在script标签中 -->
+    <script>
+        alert("我是一个内部代码");
+    </script>
+
+    <script type="text/javascript" src="JS外部文件.js">
+       // alert("我是一个外部代码");
+    </script>
+    <script>
+        // 控制浏览器弹出警告框
+        alert("这是我的第一个JS代码");
+
+        // 让计算器输出一个内容
+        document.write("hello");
+        // 向控制台输出一个内容
+        console.log("你猜我在哪里出来？");
+        // 三条语句从上到下逐条执行
+        var a = 123;
+        console.log(a);
+        console.log(typeof a);
+
+
+        var test = (function (a) {
+            this.a = a;
+            console.log(this.a);//1
+            return function (b) {
+                console.log(b);//4
+                return this.a + b;
+            }
+        })((function (a, b) {
+            console.log(a);//1
+            return a;
+        })(1, 2));
+        // test(4);
+        console.log(test(4));//5
+    </script>
+</head>
+
+<body>
+    <!-- 不方便维护不推荐 -->
+    <!-- 可以将JS代码写在标签的onclick属性中 -->
+    <button onclick="alert('你点我干嘛？！');">点我一下</button>
+    <!-- 还可以将JS代码写在超链接href属性中 -->
+    <a href="javascript:alert('让点你就点！！');">你也点我一下</a>
+</body>
+
+</html>

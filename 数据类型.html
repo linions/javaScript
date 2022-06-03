@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="text/javascript">
+    /*
+     *数据类型是指字面量的类型
+     *在JS中有六种数据类型
+       String 字符串
+       （用引号" 、'都可以，但不要混着用，可以使用\作为转义字符）
+       Number 数值
+       （在JS中所有数值都是Number类型，包括整数和浮点数
+         可以使用运算符typeof检查一个变量的类型
+         语法：typeof 变量
+         表示数的最大值：Number.MAX_VALUE、
+         infinity 正无穷 字面量
+         -infinity 负无穷
+         NaN：not a number不是一个数  字面量）
+       Boolean 布尔值
+       （
+       Null 空值
+       Undefined 未定义
+       Object 对象
+       Object属于引用数据类型，其他属于基本数据类型
+     *
+     *强制类型转换，讲其他数据类型转换为String Number Boolean
+     *
+     *将其他数据类型转换为String
+     *方法一：
+     *调用被转换类型的toString()方法
+     *但是注意：null和undefined没有toString()方法，调用会报错
+     *var a=123;
+     *var b=a.toString();
+     *a=a.toString();
+     *方法二：
+     *调用String()函数，并将被转换的数据作为参数传递给函数
+     *它会将null和undefined转换为"null"和 "undefined"
+     *var a=123
+     *a=string();
+     *
+     *将其他数据类型转换为Number
+     *如果是纯数字则转换为数字，如果为非数字则转换为NaN
+     *如果全是空格的字符串或者空串则转为0
+     *布尔型 true转换为1，false转换为0
+     *null转换为0
+     *undefined转换为NuN
+     *方法一
+     *使用Number();
+     *var a ="123";
+     *a = Number(a);
+     *
+     *方法二
+     *专门对字符串
+     *parseInt()把一个字符串转换为一个整数
+     *把一个字符传中的有效整数读取出来
+     *parseFloat()把一个字符串转换为一个浮点数
+     *取出一个字符串中的有效小数
+     *如果对非String使用parseInt或者parseFloat
+     *它会先将其转换为String再进行操作
+     *
+     *进制
+     *在JS中，16进制数用0x开头
+     *八进制数以0开头
+     *如果要表示 二进制数字则需要以0b开头
+     *但不是所以浏览器都支持
+     *解决进制问题可以在parseInt中传递第二个参数来指定进制
+     *var a = "070"
+     *a = parseInt(a,10); 表示十进制
+     *将为他数据转换为Boolean
+     *使用Boolean()函数
+     *var a = 123;
+     *a = Boolean(a);
+     *数字转布尔
+     *除了0和NaN是false，其他都为true
+     *字符串转布尔
+     *除了空串，其余都是true
+     *null和undefined都是false
+     *对象也会转换为true
+     *将任意一个数据类型取两次反，来讲其转换为布尔型
+     */
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.box {
+  width: 1000px;
+  height: 900px;
+  margin: 30px auto;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.title {
+  display: block;
+  width: 1000px;
+  height: 40px;
+  font-size: 25px;
+  font-family: "宋体";
+  line-height: 40px;
+  background-color: rgb(156, 252, 236);
+  border-radius: 10px 10px 0 0;
+}
+
+.week {
+  display: block;
+  width: 1000px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+input {
+  font-size: 15px;
+  background-color: #aef3c1;
+  outline: none;
+  border: none;
+  height: 25px;
+  width: 30px;
+  border-radius: 10px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.lesson {
+  margin-top: 6px;
+  display: block;
+  float: left;
+  width: 1000px;
+  height: 750px;
+  margin-left: 3px;
+}
+
+.day td {
+  height: 80px;
+  width: 120px;
+  line-height: 80px;
+  text-align: center;
+  background-color: #a2faba;
+}
+.edit {
+  font-size: 50px;
+  font-weight: 900;
+  text-align: center;
+  line-height: 82px;
+}
+
+td {
+  height: 150px;
+  width: 100px;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  margin-left: -1px;
+  margin-bottom: -2px;
+  border-radius: 10px;
+  border-color: #98f7b1;
+}
+
+span {
+  display: block;
+  text-align: center;
+  height: 40px;
+  width: 120px;
+  line-height: 40px;
+  border-radius: 10px 10px 0 0;
+}
+
+.first {
+  background: #c6f7d3;
+}
+
+h2 {
+  text-align: center;
+  font-family: "kaiti";
+  font-size: 30px;
+}
+
+.firstLine span {
+  height: 40px;
+  line-height: 40px;
+}
+.firstLine {
+  height: 150px;
+  width: 120px;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  margin-left: -1px;
+  margin-bottom: -2px;
+  border-radius: 10px;
+  border-color: #98f7b1;
+  background-color: #e1f7e7;
+}
+.search {
+  width: 300px;
+  margin: 30px auto;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #e1f7e7;
+}
+.button {
+  background-color: #b9ecc7;
+  display: block;
+  margin: 5px auto;
+  height: 30px;
+  width: 50px;
+  border: 1px solid #8aeba4;
+  line-height: 30px;
+  border-radius: 15px;
+  outline: none;
+}
+
+.found {
+  display: inline-block;
+  height: 30px;
+  margin-top: 10px;
+  line-height: 30px;
+}
+
+.search input {
+  height: 30px;
+  width: 170px;
+  margin-bottom: 5px;
+  margin-left: -3px;
+  border-radius: 8px;
+  outline: none;
+  background-color: #b0fac4;
+  border-style: none;
+  font-size: 15px;
+  text-align: center;
+  border-color: #83f5a2;
+}
+.month {
+  margin-right: 5px;
+  width: 60px;
+  padding: 3px;
+  border-radius: 8px;
+  background-color: #a2faba;
+  font-size: 20px;
+}
+input:hover {
+  background-color: #84d89a;
+}
+.button:hover {
+  background-color: #84d89a;
+}

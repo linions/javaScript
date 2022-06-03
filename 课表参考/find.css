@@ -1,0 +1,43 @@
+table{
+    border: 10;
+    border:  1px solid;
+    margin: auto;
+    border-radius: 15px;
+  }
+  td,th {
+    width: 60px;
+    height: 60px;
+    border: 1px solid;
+    border: unset;
+    padding: 0;
+    margin: 0;        
+  }
+  th{
+    background-color: teal;
+    border-radius: 15px;    
+  }
+  p{
+    font-size: 10px;
+  }
+  #box{
+    display: flex;
+    justify-content: space-between;
+  }
+  #left{
+    width: 200px;
+    /* height: 20px ; */
+    background-color: forestgreen;
+  }
+  #right{
+    width: 200px;
+    /* height: 20px ; */
+    background-color: forestgreen;
+  }
+  #add{
+    background-color: blue;
+    font-size: 30px;
+  }
+  .time{
+    text-align: center;
+    background-color: cornflowerblue;
+  }

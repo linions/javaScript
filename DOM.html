@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+          节点：Node  构成HTML文档的基本单元
+                 nodeName      nodeType    nodeValue是每个节点都有的属性
+         文档节点：#document       9          null
+         元素节点：标签名          1          null
+         属性节点：属性名          2          属性值
+         文本节点：#test          3          文本内容
+
+         事件
+          就是用户和浏览器之间的交互行为
+            不如：点击按钮、鼠标移动、关闭窗口
+        两种方法：在标签中直接定义属性
+                  定义一个函数，用属性调用函数
+        onclick:单击
+        ondblclick：双击
+        onmousemove:鼠标移动
+        浏览器加载页面从上至下，如果将script标签些在head标签中，按钮无法加载
+        在执行代码时，页面还没有加载，页面没有加载DOM对象也没有加载，会导致无法获取到DOM对象
+         onload事件：会在这个页面完成以后触发
+         为window绑定一个onload事件
+         window.onload=function(){
+             alert("Hello")
+         };
+         这样事件对应的响应将会在页面加载完成之后执行
+          这样可以确保我们的代码执行时所有的DOM对象已经加载完毕
+        
+        
+        Dom查询
+
+        通过document对象调用
+        获取元素节点
+        getElementById()
+        通过id的属性获取一个元素节点对象
+        getElementsByTagName()
+        通过标签名获取一组元素节点对象
+        这个方法会给我们返回一个类数组对象，所有查询到的元素都会封装到对象中
+        即使查询到的元素只有一个也会封装到数组中返回
+        getElementsByName()
+        通过name属性获取一组元素节点对象
+        对于自结束标签没有意义
+        如果需要获取元素节点属性，直接使用元素.属性名
+          可以：元素.id 元素.value 元素.name
+               但是不可以class属性不能采用这种形式
+                读取class属性时需要使用元素.className
+        innerHTML
+        通过这个属性可以获取元素内部的html代码
+        修改一个元素属性就是： 元素.属性=属性值
+        innerText
+        该属性可以获取到元素内部的文本内容
+        该属性与innerHTML类似，但不同的是它会自动将html去除
+        获取元素节点的子节点
+        getElementsByTagName()
+        方法，返回当前节点的指定标签后代节点
+        childNodes
+        属性，表示当前节点的所有子节点
+        会获取包括文本节点在内的所有节点
+        根据DOM标签与标签之间的空白也会当成文本节点
+        firstChild
+        属性，表示当前节点的第一个子节点（包括空白文本）
+        lastChild
+        属性，表示当前节点的最后一个子节点
+        children
+        属性，可以获取当前元素的所有子元素
+
+        获取父节点和兄弟节点
+        parentNode
+        属性，表示当前节点的父节点
+        previousSibling
+        属性，表示当前节点的前一个兄弟节点（也可能获取空白节点）
+        nextSibling
+        属性，表示当前节点的后一个兄弟节点
+        checked
+        属性，true为选中，false为不选
+        在实践的响应函数中，响应函数是给谁绑定的this就是谁
+
+
+
+        DOM查询的其他方法
+        
+        获取body标签
+        var body=document.getElementsByTagName("body")[0];
+        在document属性中有一个属性body，它保存的是body的引用
+         var body=document.body；
+         
+         获取html根标签
+         document.documentElement保存的是html根标签
+         var html=document.documentElement；
+         
+         获取页面中所有元素
+         document.all代表页面中所有元素
+         var all= document.all；
+         与 all=document.getElementsByTagName("*");相同
+         
+         根据class属性值查询一组元素
+         var box1=document.getElementsByClassName(box1);
+         但是该方法不支持IE8及以下的浏览器
+         
+         获取class为box1中的所有的div
+          var divS =document.getElementsByTagName("div");
+         
+         document.querySelector()
+          需要一个选择器的字符串作为参数，可以根据一个CSS选择器来查询一个元素节点对象
+           虽然IE8中没有document.getElementsByTagName()，但是可以使用document.querySelector()代替
+           使用该方法会返回唯一的一个元素，如果满足条件的元素有多个，那么他只会返回第一个
+        var div=document.querySelector(“.box1 div);
+
+         document.querySelectorAll()
+         该方法和document.querySelector()用法类似，不同的是它会将符合条件的元素封装到一个数组中返回
+          即使符合条件的元素只有一个，它也会返回数组
+
+
+        DOM的增加与删除
+        创建li元素节点
+        document.createElement();
+        可以用于创建一个元素节点对象，
+        它需要一个标签名作为参数，将会根据标签名创建元素节点对象
+        并将创建好的对象作为返回值返回
+        var li=document.createElement("li");
+
+        创建一个文本节点对象
+        document.createTextNode()
+        需要一个文本内容作为参数，将会根据该内容创建文本节点，并将新的节点返回
+
+        向父节点中添加一个子节点
+        appendChild()
+        用法：  父节点.appendChild(子节点);
+
+        在指定的子节点前插入一个新的子节点
+        insertBefore()
+        用法:  父节点.insertBefore(新节点，旧节点);
+
+        指定的子节点替换已有的子节点
+        replaceChild()
+        语法： 父节点.replaceChild(新节点，旧节点);
+
+        删除一个子节点
+        removeChild()
+        语法：  父节点.removeChild(子节点);
+                 子节点.parentNode.removeChid();
+
+        增删改：
+        先增加一个标签节点
+        再修改标签节点里面的文本内容
+        再在父节点中添加一个子节点
+
+
+      使用DOM操作CSS
+      通过JS修改元素样式：
+       语法： 元素.style.样式名=样式值；
+       只有如果CSS样式命中有-号，
+       需要将样式名修改为驼峰命名法： 去掉- ，然后将-后的字母大写
+
+       我们通过style属性设置的样式都是内联样式，
+        而内联样式有较高的优先级，所以通过JS修改的样式往往会立即显示
+         但是如果在样式中写了！important，则此样式会有最高优先级，
+          即使通过JS也不能覆盖样式，此时将会导致JS修改样式失效
+            所以精良不要为样式添加！important
+        
+        读取样式
+        语法： 元素.style.样式名
+         通过style属性设置和读取的样式都是内联样式
+          无法读取样式表中的样式
+
+         读取元素的样式
+         获取元素当前显示的样式
+         语法： 元素.currentStyle.样式名
+          如果当前元素没有设置样式，就获取其默认值
+           注意：只有IE浏览器支持
+         在其他浏览器中可以用
+           getComputedStyle()方法来获取当前元素的样式
+             这个方法时Windows的方法，可以直接使用
+             需要两个参数：
+                 第一个：要获取样式的元素
+                 第二个：可以传递一个伪元素，一般都传null
+                 该方法会返回一个对象，对象中封装了元素当前对应的样式
+                  可以通过对象.样式名来读取一个样式
+                  比如没有设置width，它不会获取到auto，而是一个长度
+                  注意：不支持IE8以下的浏览器
+        定义一个函数来获取指定元素的样式
+         参数： obj 要获取的元素
+               name 要获取的样式名   
+        通过 currentStyle和getComputedStyle()读取到的样式只能是可读的
+         不能修改，如果要修改，必须通过style属性
+         function getStyle(obj,name){
+           if(window.getComputedStyle)
+           return getComputedStyle(obj,name)[name];
+           else 
+           return obj.currentStyle[name];
+         }
+         此处可以用三木运算符
+
+
+         其他样式操作的属性 
+
+         clientWidth
+         clientHeight
+         这两个属性可以获取元素的可见宽度和高度
+          这些属性是不带px的，返回的是一个数字，可以直接进行计算
+           会获取元素宽度和高度，包括内边距和外边距
+             这些属性都是只读的
+         offsetWidth
+         offsetHeight
+         这两个属性可以获取元素的整个宽度和高度，包括内边距、外边距和边框
+         offsetParent
+           可以用来获取当前元素的定位父元素
+            会获取当前开启定位的祖先元素
+             如果所有的祖先元素都没有开启定位，则返回body
+         offsetLeft
+         当前元素相对于其定位父元素的水平偏移量    
+         offsetTop
+         当前元素相对于其定位父元素的垂直偏移量
+         scrollWidth
+         scrollHeight
+         可以获取元素整个滚动区域的高度和宽度
+         scrollLeft
+         可以获取水平滚动条滚动的距离
+         scrollTop
+         可以获取垂直滚动条滚动的距离 
+         scrollHeight - scrollTop = clientHeight
+         说明垂直滚动条滚动到底了
+         scrollWeight - scrollLeft = clientWeight
+         说明水平滚动条滚动到底了
+         onscroll
+         该事件会在滚动条滚动时触发
+         disabled
+         如果设置为true，则元素就禁用
+         如果设置为false，则元素就可用
+
+        */
+
+
+    </script>
+</head>
+
+<body>
+    <button id="btn">我是一个按钮</button>
+    <script>
+        /*浏览器已经为我们提供了一个文档节点对象 这个对象是window属性
+          可以在页面中直接使用，文档节点代表的是整个网页
+          */
+        //获取到button对象
+        var btn = document.getElementById("btn");
+        console.log(btn);
+        //修改按钮文字
+        btn.innerHTML = "I am a button"
+
+
+
+    
+    </script>
+</body>
+
+</html>
